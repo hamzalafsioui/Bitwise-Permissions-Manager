@@ -39,12 +39,84 @@
 			Console.WriteLine($"User can execute: {CanExecute}");  // False
 			Console.WriteLine($"User can delete: {CanDelete}");    // True
 
-            Console.WriteLine("\n\n Real Example class User\n");
 
 
 
+			Console.WriteLine("\n\n Real Example class User\n");
 
-            Console.ReadKey();
+			Console.WriteLine("Enter UserID:");
+			int UserID = -1;
+			if (!int.TryParse(Console.ReadLine(), out UserID))
+			{
+				Console.WriteLine("Invalid input for UserID.");
+				return;
+			}
+
+			Console.WriteLine("Enter UserName:");
+			var UserName = Console.ReadLine();
+
+			byte UserPermissions = 0;
+
+			Console.WriteLine("\nPermissions Stage:");
+			Console.WriteLine("Enter 'Y' if you want to add a permission, otherwise press any other key.");
+
+			if (IsPermissionGranted("Add"))
+				UserPermissions |= (byte)enPermissions.Add;
+
+			if (IsPermissionGranted("Update"))
+				UserPermissions |= (byte)enPermissions.Update;
+
+			if (IsPermissionGranted("Delete"))
+				UserPermissions |= (byte)enPermissions.Delete;
+
+			if (IsPermissionGranted("ViewReports"))
+				UserPermissions |= (byte)enPermissions.ViewReports;
+
+			if (IsPermissionGranted("ManageUsers"))
+				UserPermissions |= (byte)enPermissions.ManageUsers;
+
+			if (IsPermissionGranted("ExportData"))
+				UserPermissions |= (byte)enPermissions.ExportData;
+
+			if (IsPermissionGranted("ApproveRequests"))
+				UserPermissions |= (byte)enPermissions.ApproveRequests;
+
+			if (IsPermissionGranted("AdministerSystem"))
+				UserPermissions |= (byte)enPermissions.AdministerSystem;
+
+			User user = new User(UserID, UserName, UserPermissions);
+			Console.WriteLine("\nUser details:");
+			Console.WriteLine(user);
+
+			Console.WriteLine($"Is User Have a Permission Add: {(user.Permissions & (byte)enPermissions.Add) != 0}");
+			Console.WriteLine($"Is User Have a Permission Update: {(user.Permissions & (byte)enPermissions.Update) != 0}");
+			Console.WriteLine($"Is User Have a Permission Delete: {(user.Permissions & (byte)enPermissions.Delete) != 0}");
+			Console.WriteLine($"Is User Have a Permission ViewReports: {(user.Permissions & (byte)enPermissions.ViewReports) != 0}");
+			Console.WriteLine($"Is User Have a Permission ManageUsers: {(user.Permissions & (byte)enPermissions.ManageUsers) != 0}");
+			Console.WriteLine($"Is User Have a Permission ExportData: {(user.Permissions & (byte)enPermissions.ExportData) != 0}");
+			Console.WriteLine($"Is User Have a Permission ApproveRequests: {(user.Permissions & (byte)enPermissions.ApproveRequests) != 0}");
+			Console.WriteLine($"Is User Have a Permission AdministerSystem: {(user.Permissions & (byte)enPermissions.AdministerSystem) != 0}");
+
+
+			Console.WriteLine(user);
+			user.RemovePermission(enPermissions.Add);
+			Console.WriteLine("After Remove Permissions");
+			Console.WriteLine(user);
+			if (user.AccessDenied(enPermissions.Update))
+			{
+				Console.WriteLine($"You don't have the necessary permissions to access this resources {nameof(enPermissions.Update)}");
+			}
+
+			Console.ReadKey();
+		}
+
+		public static bool IsPermissionGranted(string permissionName)
+		{
+			Console.Write($"{permissionName}: ");
+			char input = char.ToLower(Console.ReadKey().KeyChar);
+			Console.WriteLine();
+			return (input == 'y');
 		}
 	}
+
 }
