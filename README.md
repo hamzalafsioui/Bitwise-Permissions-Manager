@@ -82,3 +82,4 @@ Depending on needs:
 Bitwise operations provide an efficient method to manage multiple boolean flags within a single variable. They are crucial for optimizing memory and performance in systems managing permissions, feature flags, or state management.
 
 For more on bitwise operations in C#, see Microsoft's [Bitwise and Shift Operators documentation](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators).
+- Don't Forget You Cant Contact Me At hamzalafsioui@gmail.com
