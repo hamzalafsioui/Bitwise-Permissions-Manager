@@ -42,7 +42,7 @@ Adding or removing permissions is done using bitwise OR (`|`) and bitwise AND (`
 
 ```csharp
 permissions |= FLAG_EXECUTE;    // Add execute permission
-permissions &= ~FLAG_WRITE;     // Remove write permission
+permissions &= ~FLAG_WRITE;     // Remove write permission (FLAG_WRITE = 00000010 So ~FLAG_WRITE = 11111101) ~ Mean inverse
 ```
 
 After modifying permissions:
